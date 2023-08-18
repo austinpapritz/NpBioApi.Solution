@@ -26,4 +26,18 @@ public class ParksController : ControllerBase
 
         return await _db.Parks.ToListAsync();
     }
+
+    // GET: api/Parks/115
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Park>> GetParkById(int id)
+    {
+        Park park = await _db.Parks.FindAsync(id);
+
+        if (park == null)
+        {
+            return NotFound();
+        }
+
+        return park;
+    }
 }
