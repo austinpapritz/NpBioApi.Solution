@@ -1,6 +1,7 @@
+namespace NpBioApi.Models;
 public class Species
 {
-    public int Id { get; set; } // primary key
+    public int Id { get; set; }
     public string SpeciesId { get; set; }
     public string Category { get; set; }
     public string Order { get; set; }

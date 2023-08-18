@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 
+namespace NpBioApi.Models;
+
 public class NpBioApiContext : DbContext
 {
     public DbSet<Park> Parks { get; set; }
