@@ -19,11 +19,6 @@ public class ParksController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Park>>> GetParks()
     {
-        if (_db.Parks == null)
-        {
-            return NoContent();
-        }
-
         return await _db.Parks.ToListAsync();
     }
 
@@ -45,11 +40,6 @@ public class ParksController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Park>> Post(Park park)
     {
-        if (_db.Parks == null)
-        {
-            return NotFound();
-        }
-
         _db.Parks.Add(park);
         await _db.SaveChangesAsync();
         return CreatedAtAction(nameof(GetParkById), new { id = park.Id }, park);
