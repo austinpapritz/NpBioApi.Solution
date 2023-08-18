@@ -3,8 +3,6 @@ using CsvHelper.Configuration;
 using NpBioApi.DataTransferObjects;
 using NpBioApi.Models;
 using System.Globalization;
-using System.IO;
-using System.Linq;
 
 public static class NationalParkDataSeeder
 {
