@@ -45,4 +45,39 @@ public class ParksController : ControllerBase
         return CreatedAtAction(nameof(GetParkById), new { id = park.Id }, park);
     }
 
+    // PUT: api/Parks/1
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Put(int id, Park park)
+    {
+        if (id != park.Id)
+        {
+            return BadRequest();
+        }
+
+        _db.Parks.Update(park);
+
+        try
+        {
+            await _db.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!ParkExists(id))
+            {
+                return NotFound();
+            }
+            else
+            {
+                throw;
+            }
+        }
+
+        return NoContent();
+    }
+
+    private bool ParkExists(int id)
+    {
+        return _db.Parks.Any(p => p.Id == id);
+    }
+
 }
