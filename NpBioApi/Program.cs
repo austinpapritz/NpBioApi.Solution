@@ -21,6 +21,15 @@ builder.Services.AddDbContext<NpBioApiContext>(
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<NpBioApiContext>();
+    if (!context.Parks.Any())
+    {
+        NationalParkDataSeeder.Seed(context);
+    }
+}
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
