@@ -40,4 +40,19 @@ public class ParksController : ControllerBase
 
         return park;
     }
+
+    // POST api/Parks
+    [HttpPost]
+    public async Task<ActionResult<Park>> Post(Park park)
+    {
+        if (_db.Parks == null)
+        {
+            return NotFound();
+        }
+
+        _db.Parks.Add(park);
+        await _db.SaveChangesAsync();
+        return CreatedAtAction(nameof(GetParkById), new { id = park.Id }, park);
+    }
+
 }

@@ -18,12 +18,12 @@ public static class NationalParkDataSeeder
             var parkDtos = csv.GetRecords<ParkDto>().ToList();
             var parks = parkDtos.Select(p => new Park
             {
-                ParkCode = p.ParkCode ?? "Unknown",
-                ParkName = p.ParkName ?? "Unknown",
-                State = p.State ?? "Unknown",
-                Acres = p.Acres ?? 0,
-                Latitude = p.Latitude ?? 0,
-                Longitude = p.Longitude ?? 0
+                ParkCode = p.ParkCode,
+                ParkName = p.ParkName,
+                State = p.State,
+                Acres = p.Acres,
+                Latitude = p.Latitude,
+                Longitude = p.Longitude
             }).ToList();
 
             context.Parks.AddRange(parks);
@@ -37,9 +37,9 @@ public static class NationalParkDataSeeder
             var speciesDtos = csv.GetRecords<SpeciesDto>().ToList();
             var speciesList = speciesDtos.Select(s => new Species
             {
-                SpeciesId = s.SpeciesId ?? "Unknown",
-                ParkId = context.Parks.FirstOrDefault(p => p.ParkName == s.ParkName)?.Id ?? 1,
-                ParkName = s.ParkName ?? "Unknown",
+                SpeciesId = s.SpeciesId,
+                ParkId = context.Parks.FirstOrDefault(p => p.ParkName == s.ParkName).Id,
+                ParkName = s.ParkName,
                 Category = s.Category ?? "Unknown",
                 Order = s.Order ?? "Unknown",
                 Family = s.Family ?? "Unknown",
