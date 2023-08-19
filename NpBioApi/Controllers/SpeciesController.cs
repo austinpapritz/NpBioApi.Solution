@@ -76,8 +76,8 @@ public class SpeciesController : ControllerBase
         return species;
     }
 
-    //GET: api/Species/{commonName}/Parks
-    [HttpGet("{commonName}/Parks")]
+    //GET: api/Species/CommonName/{commonName}/Parks
+    [HttpGet("CommonName/{commonName}/Parks")]
     public async Task<ActionResult<IEnumerable<Park>>> GetParksBySpeciesCommonName(string commonName)
     {
         commonName = commonName.ToLower().Trim();
@@ -100,6 +100,29 @@ public class SpeciesController : ControllerBase
 
         return species;
     }
+
+    //GET: api/Species/ScientificName/{scientificName}/Parks
+    [HttpGet("ScientificName/{scientificName}/Parks")]
+    public async Task<ActionResult<IEnumerable<Park>>> GetParksBySpeciesScientificName(string scientificName)
+    {
+        scientificName = scientificName.ToLower();
+
+        var species = await _db.Species
+                                .Include(s => s.Park)
+                                .Where(s => s.ScientificName.ToLower() == scientificName)
+                                .Select(s => s.Park)
+                                .Distinct()
+                                .ToListAsync();
+
+        if (!species.Any())
+        {
+            return NotFound($"Species with scientific name {scientificName} not found.");
+        }
+
+        return species;
+    }
+
+
 
     // POST api/Species
     [HttpPost]
