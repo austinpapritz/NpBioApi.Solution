@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace NpBioApi.Models;
 public class Species
 {
@@ -17,5 +19,6 @@ public class Species
     public string ConservationStatus { get; set; }
 
     public int ParkId { get; set; }
+    [JsonIgnore]
     public Park Park { get; set; }
 }

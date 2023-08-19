@@ -75,6 +75,25 @@ public class ParksController : ControllerBase
         return NoContent();
     }
 
+
+
+    //GET: api/Parks/{id}/Species
+    [HttpGet("{id}/Species")]
+    public async Task<ActionResult<IEnumerable<Species>>> GetSpeciesByParkId(int id)
+    {
+        // Check if the park exists.
+        var park = await _db.Parks.FindAsync(id);
+        if (park == null)
+        {
+            return NotFound($"Park with ID {id} not found.");
+        }
+
+        // Get the species associated with the park
+        var speciesInPark = await _db.Species.Where(s => s.ParkId == id).ToListAsync();
+
+        return speciesInPark;
+    }
+
     private bool ParkExists(int id)
     {
         return _db.Parks.Any(p => p.Id == id);
