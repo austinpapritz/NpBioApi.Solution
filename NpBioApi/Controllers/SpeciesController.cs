@@ -122,6 +122,23 @@ public class SpeciesController : ControllerBase
         return species;
     }
 
+#nullable enable
+    // GET: api/Species/Search?commonName={commonName}
+    [HttpGet("Search")]
+    public async Task<ActionResult<IEnumerable<Species>>> GetSpeciesByCommonName(string? commonName)
+    {
+        IQueryable<Species> query = _db.Species;
+
+        if (!string.IsNullOrEmpty(commonName))
+        {
+            query = query.Where(s => s.CommonNames.Contains(commonName));
+        }
+
+        return await query.ToListAsync();
+    }
+#nullable disable
+
+
 
 
     // POST api/Species
