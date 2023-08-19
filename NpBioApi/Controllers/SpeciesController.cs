@@ -31,6 +31,7 @@ public class SpeciesController : ControllerBase
         int totalCount = await _db.Species.CountAsync();
         int totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
 
+        // Error msg if page number exceeds the last page.
         if (page > totalPages && totalPages > 0)
         {
             return BadRequest("Page number exceeds total pages.");
