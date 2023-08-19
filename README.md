@@ -146,10 +146,10 @@ Welcome to the US National Park Biodiversity API! This API provides access to de
 
 ```json
 {
-  "id": int,
+  "id": int, // Starts at 113.
   "parkCode": "string",
   "parkName": "string",
-  "state": "string",
+  "state": "string", // Two-letter state abbreviation.
   "acres": int,
   "latitude": double,
   "longitude": double
@@ -158,23 +158,25 @@ Welcome to the US National Park Biodiversity API! This API provides access to de
 
 ### Species Model
 
+Some records have incomplete data. If so, string values will be an empty string `""`.
+
 ```json
 {
-  "id": integer,
+  "id": integer, // Starts at 1.
   "speciesId": "string",
   "parkName": "string",
   "category": "string",
   "order": "string",
   "family": "string",
   "scientificName": "string",
-  "commonNames": "string",
-  "recordStatus": "string",
-  "occurrence": "string",
-  "nativeness": "string",
-  "abundance": "string",
-  "seasonality": "string",
-  "conservationStatus": "string",
-  "parkId": integer
+  "commonNames": "string", // Usually single name, sometimes multiple "Northern White-Tailed Deer, Virginia Deer, White-Tailed Deer", dataset is inconsistent with spaces between commas.
+  "recordStatus": "string", 
+  "occurrence": "string", 
+  "nativeness": "string", 
+  "abundance": "string", 
+  "seasonality": "string", 
+  "conservationStatus": "string", 
+  "parkId": integer 
 }
 ```
 
@@ -183,12 +185,12 @@ Welcome to the US National Park Biodiversity API! This API provides access to de
 ```json
 {
     "metadata": {
-        "totalCount": integer,
+        "totalCount": integer, // Database contains over 119,000 species.
         "pageSize": integer,
         "currentPage": integer,
         "totalPages": integer,
-        "hasPrevious": bool,
-        "hasNext": bool
+        "hasPrevious": bool, // True, unless on first page.
+        "hasNext": bool // True, unless on last page.
     },
     "data": [
         {
