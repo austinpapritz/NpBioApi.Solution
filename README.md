@@ -1,5 +1,16 @@
 # US National Park Biodiversity API
 
+#### By _Austin Papritz_
+
+## Technologies Used
+
+* _C#_
+* _ASP.NET Core_
+* _MySQL_
+* _Visual Studio Code_
+* _Entity Framework Core_
+* _CvsHelper library_
+
 Welcome to the US National Park Biodiversity API! This API provides access to detailed information about US National Parks and the various species found within them. Parks and species dataset were downloaded from [kaggle.com](https://www.kaggle.com/datasets/nationalparkservice/park-biodiversity).
 
 ## Table of Contents
@@ -15,12 +26,43 @@ Welcome to the US National Park Biodiversity API! This API provides access to de
 - [Support and Feedback](#support-and-feedback)
 - [License](#license)
 
-## Getting Started
+## Project Setup
 
-To get started with using the API, follow these steps:
+* _Navigate to where you want to save the repo using your favorite terminal app (e.g., GitBash)._
+* _Enter in terminal:_ 
 
-1. [Provide setup instructions if needed].
-2. Use the endpoints detailed below to fetch the desired information.
+    ```$ git clone https://github.com/austinpapritz/NpBioApi.Solution.git```
+* _Navigate into the repo folder and then open it in your favorite IDE (e.g., VS Code, Xcode, Atom)._
+
+## Database Setup
+
+* _Search online to install MySQL on your computer. Remember your username and password._
+* _Add `appsettings.Development.json` file to project folder. Paste the following code, inserting your own information where {indicated}._
+
+```json
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=localhost;Port=3306;database={DATABASE-NAME};uid={USERNAME};pwd={PASSWORD};"
+  }
+}
+```
+* _Build the project by entering `$ dotnet build`._
+* _Seed the database by entering `$ dotnet run`._
+* _This will likely take several minutes._
+
+## Making API Calls
+
+* _Search online to install Postman on your computer._
+* _In Postman, navigate to `Workspaces` > `My WorkSpaces`_
+* _Start every call with `http://localhost:5000`, see specific endpoints below._
+* _Make sure you have entered `$ dotnet run` in terminal before making calls in Postman._
 
 ## Endpoints
 
@@ -58,7 +100,7 @@ To get started with using the API, follow these steps:
 - Parameters:
   - `page`: The page number (default is 1).
   - `pageSize`: Number of species per page (default is 100).
-- Includes pagination metadata (see [Paginated Species List Model](#paginated-species-list-model))
+- Includes pagination metadata (see [Paginated Species List Model](#paginated-species-list-model)).
 
 #### **GET** `/api/Species/{id}`
 
