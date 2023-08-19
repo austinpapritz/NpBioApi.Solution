@@ -76,6 +76,31 @@ public class SpeciesController : ControllerBase
         return species;
     }
 
+    //GET: api/Species/{commonName}/Parks
+    [HttpGet("{commonName}/Parks")]
+    public async Task<ActionResult<IEnumerable<Park>>> GetParksBySpeciesCommonName(string commonName)
+    {
+        commonName = commonName.ToLower().Trim();
+
+        var species = await _db.Species
+                                .Include(s => s.Park)
+                                .Where(s => EF.Functions.Like(
+                                               s.CommonNames.ToLower(), $"%, {commonName}, %")
+                                            || s.CommonNames.ToLower().StartsWith($"{commonName}, ")
+                                            || s.CommonNames.ToLower().EndsWith($", {commonName}")
+                                            || s.CommonNames.ToLower() == commonName)
+                                .Select(s => s.Park)
+                                .Distinct()
+                                .ToListAsync();
+
+        if (!species.Any())
+        {
+            return NotFound($"Species with common name {commonName} not found.");
+        }
+
+        return species;
+    }
+
     // POST api/Species
     [HttpPost]
     public async Task<ActionResult<Species>> Post(Species species)

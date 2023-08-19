@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace NpBioApi.Models;
 public class Park
 {
@@ -9,5 +11,6 @@ public class Park
     public double Latitude { get; set; }
     public double Longitude { get; set; }
 
+    [JsonIgnore]
     public ICollection<Species> Species { get; set; }
 }
