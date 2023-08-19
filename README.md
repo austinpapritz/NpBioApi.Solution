@@ -16,6 +16,9 @@ Welcome to the US National Park Biodiversity API! This API provides access to de
 ## Table of Contents
 
 - [Getting Started](#getting-started)
+  - [Project Setup](#project-setup)
+  - [Database Setup](#database-setup)
+  - [Making API Calls](#making-api-calls)
 - [Endpoints](#endpoints)
   - [Parks](#parks)
   - [Species](#species)
@@ -26,7 +29,9 @@ Welcome to the US National Park Biodiversity API! This API provides access to de
 - [Support and Feedback](#support-and-feedback)
 - [License](#license)
 
-## Project Setup
+## Getting Started
+
+### Project Setup
 
 * _Navigate to where you want to save the repo using your favorite terminal app (e.g., GitBash)._
 * _Enter in terminal:_ 
@@ -34,7 +39,7 @@ Welcome to the US National Park Biodiversity API! This API provides access to de
     ```$ git clone https://github.com/austinpapritz/NpBioApi.Solution.git```
 * _Navigate into the repo folder and then open it in your favorite IDE (e.g., VS Code, Xcode, Atom)._
 
-## Database Setup
+### Database Setup
 
 * _Search online to install MySQL on your computer. Remember your username and password._
 * _Add `appsettings.Development.json` file to project folder. Paste the following code, inserting your own information where {indicated}._
@@ -57,7 +62,7 @@ Welcome to the US National Park Biodiversity API! This API provides access to de
 * _Seed the database by entering `$ dotnet run`._
 * _This will likely take several minutes._
 
-## Making API Calls
+### Making API Calls
 
 * _Search online to install Postman on your computer._
 * _In Postman, navigate to `Workspaces` > `My WorkSpaces`_
