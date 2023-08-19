@@ -1,7 +1,6 @@
 using NpBioApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace NpBioApi.Controllers;
 
@@ -54,8 +53,8 @@ public class SpeciesController : ControllerBase
         // Combine species data and metadata into one response.
         var response = new
         {
-            data = data,
-            metadata = metadata
+            metadata = metadata,
+            data = data
         };
 
         return Ok(response);
@@ -123,15 +122,20 @@ public class SpeciesController : ControllerBase
     }
 
 #nullable enable
-    // GET: api/Species/Search?commonName={commonName}
+    // GET: api/Species/Search?param={value}
     [HttpGet("Search")]
-    public async Task<ActionResult<IEnumerable<Species>>> GetSpeciesByCommonName(string? commonName)
+    public async Task<ActionResult<IEnumerable<Species>>> GetSpeciesByCommonName(string? commonName, string? scientificName)
     {
         IQueryable<Species> query = _db.Species;
 
         if (!string.IsNullOrEmpty(commonName))
         {
             query = query.Where(s => s.CommonNames.Contains(commonName));
+        }
+
+        if (!string.IsNullOrEmpty(scientificName))
+        {
+            query = query.Where(s => s.ScientificName.Contains(scientificName));
         }
 
         return await query.ToListAsync();
