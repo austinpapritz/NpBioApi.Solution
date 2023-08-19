@@ -1,6 +1,7 @@
 using NpBioApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace NpBioApi.Controllers;
 
@@ -15,12 +16,50 @@ public class SpeciesController : ControllerBase
         _db = db;
     }
 
-    // GET: api/Species
+    // GET: api/Species returns first 100 species
+    // GET: api/Species?page=3 returns the 200th-300th species
+    // GET: api/Species?page=2&pageSize=1000 returns the 1000th-2000th species
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Species>>> GetSpecies()
+    public async Task<ActionResult<IEnumerable<Species>>> GetSpecies(int page = 1, int pageSize = 100)
     {
-        return await _db.Species.Take(50).ToListAsync();
+        if (page < 1 || pageSize <= 0)
+        {
+            return BadRequest("Invalid pagination parameters.");
+        }
+
+        // Grab species count and calculate total pages to include in metadata.
+        int totalCount = await _db.Species.CountAsync();
+        int totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
+
+        if (page > totalPages && totalPages > 0)
+        {
+            return BadRequest("Page number exceeds total pages.");
+        }
+
+        // Calculate how many pages to skip then assign species list to data.
+        int skip = (page - 1) * pageSize;
+        var data = await _db.Species.Skip(skip).Take(pageSize).ToListAsync();
+
+
+        // Metadata help devs navigate pages.
+        var metadata = new PaginationMetadata
+        {
+            TotalCount = totalCount,
+            PageSize = pageSize,
+            CurrentPage = page,
+            TotalPages = totalPages
+        };
+
+        // Combine species data and metadata into one response.
+        var response = new
+        {
+            data = data,
+            metadata = metadata
+        };
+
+        return Ok(response);
     }
+
 
     // GET: api/Species/115
     [HttpGet("{id}")]
