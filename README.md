@@ -121,8 +121,8 @@ Welcome to the US National Park Biodiversity API! This API provides access to de
 
 #### **GET** `/api/Species/Search`
 
-- Searches for species by their common name or scientific name.
-- Not case sensitive, matches partial strings.
+- Searches for species by their common name and/or scientific name.
+- Not case sensitive, can match partial word strings.
 - Parameters:
   - `commonName`: The common name of the species.
   - `scientificName`: The scientific name of the species.
